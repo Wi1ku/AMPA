@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="colorVeryServerlyUnderweight">#26099C</color>
+    <color name="colorServerlyUnderweight">#5226FF</color>
+    <color name="colorUnderweight">#69F084</color>
+    <color name="colorNormal">#00D82B</color>
+    <color name="colorOverweight">#F0F386</color>
+    <color name="colorModeratlyObese">#E1E900</color>
+    <color name="colorServerlyObese">#FF8080</color>
+    <color name="colorVeryServerlyObese">#D23737</color>
+
+</resources>
