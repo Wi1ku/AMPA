@@ -11,4 +11,9 @@
             android:title="@string/selectImperial"
             />
 
+    <item
+        android:id="@+id/selectHistory"
+        android:title="@string/history"
+        />
+
     </menu>

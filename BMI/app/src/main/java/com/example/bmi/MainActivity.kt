@@ -1,5 +1,6 @@
 package com.example.bmi
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,13 +10,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bmi.databinding.ActivityMainBinding
+import com.example.bmi.*
 
 
+@ExperimentalStdlibApi
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     private var isImperial = false
-    var history = ArrayList<Double>(10)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +72,12 @@ class MainActivity : AppCompatActivity() {
                 isImperial = true
                 true
             }
+            R.id.selectHistory ->{
+                val LAUNCH_SECOND_ACTIVITY = 1
+                val i = BMIHistory.newIntent(this)
+                startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -92,13 +100,15 @@ class MainActivity : AppCompatActivity() {
                     massET.error = getString(R.string.mass_is_empty)
                 }
                 if (bmiCounter.checkForCorrectValues(massET.text.toString().toDouble(), heightET.text.toString().toDouble(), isImperial)){
-                    setBmi(bmiCounter.countBmi(massET.text.toString().toDouble(), heightET.text.toString().toDouble(), isImperial), view)
-
+                    val bmi = bmiCounter.countBmi(massET.text.toString().toDouble(), heightET.text.toString().toDouble(), isImperial)
+                    setBmi(bmi, view)
+                    saveBmiResult(bmi)
                     }
                 else{
                     val toast = Toast.makeText(applicationContext, R.string.invalid_input_data, Toast.LENGTH_SHORT)
                     toast.show()
                     }
+
                 }
             }
 
@@ -126,7 +136,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun colourBmi(bmi: Double, textView: TextView){
+    private fun colourBmi(bmi: Double, textView: TextView){
         when {
             bmi < 16 -> textView.setTextColor(getColor(R.color.colorVeryServerlyUnderweight))
             (bmi >= 16) and (bmi < 17) -> textView.setTextColor(getColor(R.color.colorServerlyUnderweight))
@@ -138,5 +148,27 @@ class MainActivity : AppCompatActivity() {
             bmi >= 40 -> textView.setTextColor(getColor(R.color.colorVeryServerlyObese))
         }
     }
+
+
+
+    private fun saveBmiResult(bmi: Double){
+        val sharedPref = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE) ?: return
+        val Tools = Tools()
+        var history = Tools.splitIgnoreEmpty(sharedPref.getString(getString(R.string.history), "")!!," ").toMutableList()
+        if(history.size > 9){
+            history.removeFirst()
+        }
+        history.add(bmi.toString())
+        var results = ""
+        for (result in history){
+            results += result + " "
+        }
+        results.trim(results.last())
+        with (sharedPref.edit()) {
+            putString(getString(R.string.history), results)
+            apply()
+        }
+    }
+
 
 }

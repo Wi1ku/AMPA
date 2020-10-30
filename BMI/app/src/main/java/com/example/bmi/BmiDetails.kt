@@ -59,12 +59,6 @@ class BmiDetails : Activity() {
             }
         }
     }
-    
-
-    //TODO: skopiowane z MainActitvity, zastanowić się jak zrobić to lepiej
-    fun colourBmi(bmi: Double, textView: TextView){
-
-    }
 
 
     companion object {

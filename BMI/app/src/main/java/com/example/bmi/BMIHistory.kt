@@ -14,10 +14,12 @@ class BMIHistory : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.bmi_history)
-        val history = intent.getStringArrayExtra("history")
+        val sharedPref = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE) ?: return
+        val Tools = Tools()
+        var history = Tools.splitIgnoreEmpty(sharedPref.getString(getString(R.string.history), "")!!," ").toMutableList()
 
         viewManager = LinearLayoutManager(this)
-       // viewAdapter = history?.let { History_adapter(it) }!!
+        viewAdapter = HistoryAdapter(history)
 
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
             // use this setting to improve performance if you know that changes
@@ -33,11 +35,12 @@ class BMIHistory : Activity() {
         }
     }
 
+
+
     companion object {
 
-        fun newIntent(context: Context, history: DoubleArray): Intent {
-            val intent = Intent(context, BmiDetails::class.java)
-            intent.putExtra("history", history)
+        fun newIntent(context: Context): Intent {
+            val intent = Intent(context, BMIHistory::class.java)
             return intent
         }
     }
