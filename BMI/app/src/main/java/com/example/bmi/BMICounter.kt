@@ -1,11 +1,18 @@
 package com.example.bmi
+import kotlin.math.round
 
 class BMICounter {
     fun countBmi(mass: Double, height: Double, isImperial: Boolean = false): Double {
         val bmi = mass/(height*height);
         return if (isImperial){
-            bmi*703;
-        } else bmi*10000
+            (bmi*703).round(2);
+        } else (bmi*10000).round(2)
+    }
+
+    fun Double.round(decimals: Int): Double {
+        var multiplier = 1.0
+        repeat(decimals) { multiplier *= 10 }
+        return round(this * multiplier) / multiplier
     }
 
     fun checkForCorrectValues(mass: Double, height: Double, isImperial: Boolean = false): Boolean{

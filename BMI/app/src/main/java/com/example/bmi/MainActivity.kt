@@ -1,6 +1,5 @@
 package com.example.bmi
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -15,7 +14,8 @@ import com.example.bmi.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
-    var isImperial = false
+    private var isImperial = false
+    var history = ArrayList<Double>(10)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,16 +105,7 @@ class MainActivity : AppCompatActivity() {
     private fun setBmi(bmi: Double, view: View){
         binding.apply {
             bmiTV.text = bmi.toString()
-            when {
-                bmi < 16 -> bmiTV.setTextColor(getColor(R.color.colorVeryServerlyUnderweight))
-                (bmi >= 16) and (bmi < 17) -> bmiTV.setTextColor(getColor(R.color.colorServerlyUnderweight))
-                (bmi >= 17) and (bmi < 18.5) -> bmiTV.setTextColor(getColor(R.color.colorUnderweight))
-                (bmi >= 18.5) and (bmi < 26) -> bmiTV.setTextColor(getColor(R.color.colorNormal))
-                (bmi >= 25) and (bmi < 30) -> bmiTV.setTextColor(getColor(R.color.colorOverweight))
-                (bmi >= 30) and (bmi < 35) -> bmiTV.setTextColor(getColor(R.color.colorModeratlyObese))
-                (bmi >= 35) and (bmi < 40) -> bmiTV.setTextColor(getColor(R.color.colorServerlyObese))
-                bmi >= 40 -> bmiTV.setTextColor(getColor(R.color.colorVeryServerlyObese))
-                }
+            colourBmi(bmi, bmiTV)
             }
         }
     private fun setUnits(name: String){
@@ -134,4 +125,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    fun colourBmi(bmi: Double, textView: TextView){
+        when {
+            bmi < 16 -> textView.setTextColor(getColor(R.color.colorVeryServerlyUnderweight))
+            (bmi >= 16) and (bmi < 17) -> textView.setTextColor(getColor(R.color.colorServerlyUnderweight))
+            (bmi >= 17) and (bmi < 18.5) -> textView.setTextColor(getColor(R.color.colorUnderweight))
+            (bmi >= 18.5) and (bmi < 26) -> textView.setTextColor(getColor(R.color.colorNormal))
+            (bmi >= 25) and (bmi < 30) -> textView.setTextColor(getColor(R.color.colorOverweight))
+            (bmi >= 30) and (bmi < 35) -> textView.setTextColor(getColor(R.color.colorModeratlyObese))
+            (bmi >= 35) and (bmi < 40) -> textView.setTextColor(getColor(R.color.colorServerlyObese))
+            bmi >= 40 -> textView.setTextColor(getColor(R.color.colorVeryServerlyObese))
+        }
+    }
+
 }

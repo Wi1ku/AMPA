@@ -10,9 +10,11 @@
     <string name="height_in">Height [in]:</string>
     <string name="selectMetric">Metric Units [kg/m]:</string>
     <string name="selectImperial">Imperial Units [lb/in]:</string>
-    <string name="normal">Normal</string>
+    <string name="bmi">BMI</string>
     <string name="desc">desc</string>
-    <string name="imagedecription">ImageDecription</string>
+    <string name="bmi_desc">Your BMI is %s indicating your weight is in the %s category.</string>
+    <string name="imagedecription">ImageDescription</string>
+    <string name="your_result">Your result is:</string>
     <string name="invalid_input_data">Data you entered cannot be calculated</string>
 
 
