@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class HistoryAdapter(private val Dataset: List<String>) :
+class HistoryAdapter(private val Dataset: List<BmiRecord>) :
     RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
     // Provide a reference to the views for each data item
@@ -34,7 +34,7 @@ class HistoryAdapter(private val Dataset: List<String>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.textView.text = Dataset[position]
+        holder.textView.text = Dataset[position].toString()
     }
 
     // Return the size of your dataset (invoked by the layout manager)

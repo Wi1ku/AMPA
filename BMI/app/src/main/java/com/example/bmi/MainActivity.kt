@@ -10,7 +10,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bmi.databinding.ActivityMainBinding
-import com.example.bmi.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.util.*
 
 
 @ExperimentalStdlibApi
@@ -84,8 +86,11 @@ class MainActivity : AppCompatActivity() {
 
     fun showBmiDetails(view: View){
         val LAUNCH_SECOND_ACTIVITY = 1
-        val i = BmiDetails.newIntent(this, binding.bmiTV.text.toString())
-        startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
+        val bmi = binding.bmiTV.text.toString()
+        if (bmi != "0.00"){
+            val i = BmiDetails.newIntent(this, bmi)
+            startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
+        }
     }
 
 
@@ -152,23 +157,37 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun saveBmiResult(bmi: Double){
-        val sharedPref = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE) ?: return
-        val Tools = Tools()
-        var history = Tools.splitIgnoreEmpty(sharedPref.getString(getString(R.string.history), "")!!," ").toMutableList()
+        val record = BmiRecord(bmi, Calendar.getInstance().timeInMillis)
+        var history = getHistory()
+        if(history == null){
+            history = mutableListOf<BmiRecord>()
+        }
+        else{
+            history = history.toMutableList()
+        }
         if(history.size > 9){
             history.removeFirst()
         }
-        history.add(bmi.toString())
-        var results = ""
-        for (result in history){
-            results += result + " "
-        }
-        results.trim(results.last())
+        history.add(record)
+        saveHistory(history)
+    }
+
+    fun getHistory(): List<BmiRecord>? {
+        val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val historyString = sharedPref.getString(getString(R.string.history), "")!!
+        return Gson().fromJson<List<BmiRecord>>(historyString)
+    }
+
+    inline fun <reified T> Gson.fromJson(json: String) = fromJson<T>(json, object: TypeToken<T>() {}.type)
+
+    fun saveHistory(list: List<BmiRecord>){
+        val sharedPref = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = gson.toJson(list)
         with (sharedPref.edit()) {
-            putString(getString(R.string.history), results)
+            putString(getString(com.example.bmi.R.string.history), json)
             apply()
         }
     }
-
 
 }

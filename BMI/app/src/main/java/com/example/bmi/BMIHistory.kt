@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class BMIHistory : Activity() {
     private lateinit var recyclerView: RecyclerView
@@ -15,8 +17,7 @@ class BMIHistory : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.bmi_history)
         val sharedPref = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE) ?: return
-        val Tools = Tools()
-        var history = Tools.splitIgnoreEmpty(sharedPref.getString(getString(R.string.history), "")!!," ").toMutableList()
+        var history = getHistory()
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = HistoryAdapter(history)
@@ -35,6 +36,14 @@ class BMIHistory : Activity() {
         }
     }
 
+    fun getHistory(): List<BmiRecord> {
+        val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val historyString = sharedPref.getString(getString(R.string.history), "")!!
+        val history = Gson().fromJson<List<BmiRecord>>(historyString)
+        return history
+    }
+
+    inline fun <reified T> Gson.fromJson(json: String) = fromJson<T>(json, object: TypeToken<T>() {}.type)
 
 
     companion object {
