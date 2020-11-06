@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
                 if (bmiCounter.checkForCorrectValues(mass, height, isImperial)){
                     val bmi = bmiCounter.countBmi(mass, height, isImperial)
                     setBmi(bmi, view)
-                    saveBmiResult(bmi)
+                    saveBmiResult(bmi, mass, height)
                     }
                 else{
                     val toast = Toast.makeText(applicationContext, R.string.invalid_input_data, Toast.LENGTH_SHORT)
@@ -158,8 +158,8 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    private fun saveBmiResult(bmi: Double){
-        val record = BmiRecord(bmi, Calendar.getInstance().timeInMillis)
+    private fun saveBmiResult(bmi: Double, mass: Double, height: Double){
+        val record = BmiRecord(bmi, mass, height, isImperial, Calendar.getInstance().timeInMillis)
         var history = getHistory()
         if(history == null){
             history = mutableListOf<BmiRecord>()

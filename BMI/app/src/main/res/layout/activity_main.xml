@@ -17,8 +17,8 @@
         android:id="@+id/massTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="@dimen/layout_marginStart"
+        android:layout_marginBottom="@dimen/layout_marginBottom"
         android:text="@string/mass_kg"
         app:layout_constraintBottom_toTopOf="@+id/massET"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,10 +29,11 @@
 
     <TextView
         android:id="@+id/your_result_TV"
-        android:layout_width="149dp"
-        android:layout_height="38dp"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
         android:text="@string/your_result"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/bmiTV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,21 +42,21 @@
 
     <EditText
         android:id="@+id/massET"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="@dimen/layout_marginStart"
+        android:layout_marginEnd="@dimen/layout_marginEnd"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/heightET"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/heightET"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginEnd="@dimen/margin"
@@ -83,22 +84,25 @@
 
     <Button
         android:id="@+id/countBTN"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin"
+        android:layout_marginTop="@dimen/CountBtnMarginTop"
         android:layout_marginEnd="@dimen/margin"
         android:onClick="count"
         android:text="@string/count_bmi"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:layout_constraintVertical_bias="0.275" />
 
     <TextView
         android:id="@+id/bmiTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="132dp"
+        android:layout_marginBottom="@dimen/layout_marginBottom"
         android:clickable="true"
         android:focusable="true"
         android:onClick="showBmiDetails"

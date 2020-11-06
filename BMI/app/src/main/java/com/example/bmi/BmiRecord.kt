@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @Serializable
-data class BmiRecord(val bmi:Double, val time: Long){
+data class BmiRecord(val bmi:Double, val height: Double, val mass:Double, val isImperial:Boolean,  val time: Long){
     //TODO: strings
     override fun toString(): String{
         val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm")

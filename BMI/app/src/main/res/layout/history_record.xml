@@ -4,15 +4,15 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
+    android:paddingTop="@dimen/defaultPadding"
+    android:paddingBottom="@dimen/defaultPadding"
     android:layout_gravity="center"
     >
 
     <TextView
         android:id="@+id/record"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_weight="1"
 

@@ -8,8 +8,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="306dp"
-        android:layout_height="284dp"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
         android:adjustViewBounds="true"
         android:contentDescription="@string/imagedecription"
         android:src="@drawable/bmi_chart"
@@ -23,24 +25,26 @@
 
     <TextView
         android:id="@+id/descriptionTV"
-        android:layout_width="301dp"
-        android:layout_height="83dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin"
         android:text="@string/desc"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resultInfoTV" />
+        app:layout_constraintTop_toBottomOf="@+id/resultInfoTV"
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
         android:id="@+id/resultInfoTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="@dimen/resultInfoTV_MarginTop"
         android:text="@string/bmi"
-        android:textSize="32dp"
+        android:textSize="@dimen/resultInfoTV_TxtSize"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

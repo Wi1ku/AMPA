@@ -2,4 +2,14 @@
 <resources>
     <dimen name="margin">16dp</dimen>
     <dimen name="margin_distance">16dp</dimen>
+    <dimen name="layout_marginStart">24dp</dimen>
+    <dimen name="layout_marginEnd">24dp</dimen>
+    <dimen name="layout_marginBottom">8dp</dimen>
+    <dimen name="CountBtnMarginTop">40dp</dimen>
+    <dimen name="zero">0dp</dimen>
+    <dimen name="resultTV_width">0dp</dimen>
+    <dimen name="resultTV_height">0dp</dimen>
+    <dimen name="resultInfoTV_MarginTop">50dp</dimen>
+    <dimen name="resultInfoTV_TxtSize">32sp</dimen>
+    <dimen name="defaultPadding">10dp</dimen>
 </resources>
