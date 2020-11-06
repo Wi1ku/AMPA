@@ -2,6 +2,15 @@ package com.example.bmi
 import kotlin.math.round
 
 class BMICounter {
+    val lbsToKliogramsRatio = 0.453592
+    val inchToMeterRatio = 2.54
+    //bounds are in metric units, mass in kg, height in cm
+    val massBottomBound = 20
+    val massTopBound = 300
+    val heightBottomBound = 100
+    val heightTopBound = 250
+
+    //mass - mass in kg/lbs, height in inches/centimeters
     fun countBmi(mass: Double, height: Double, isImperial: Boolean = false): Double {
         val bmi = mass/(height*height);
         return if (isImperial){
@@ -16,10 +25,9 @@ class BMICounter {
     }
 
     fun checkForCorrectValues(mass: Double, height: Double, isImperial: Boolean = false): Boolean{
-        //TODO remove magic numbers
         if (isImperial){
-             return (0.453592*mass > 20) and (0.453592*mass < 300) and (2.54*height > 100) and (2.54*height < 250)
+             return (lbsToKliogramsRatio*mass > massBottomBound) and (lbsToKliogramsRatio*mass < massTopBound) and (inchToMeterRatio*height > heightBottomBound) and (inchToMeterRatio*height < heightTopBound)
         }
-        return (mass > 20) and (mass < 300) and (height > 100) and (height < 250)
+        return (mass > massBottomBound) and (mass < massTopBound) and (height > heightBottomBound) and (height < heightTopBound)
     }
 }

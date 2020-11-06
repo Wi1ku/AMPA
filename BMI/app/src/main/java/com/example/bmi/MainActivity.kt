@@ -104,8 +104,10 @@ class MainActivity : AppCompatActivity() {
                 if (massET.text.isBlank()) {
                     massET.error = getString(R.string.mass_is_empty)
                 }
-                if (bmiCounter.checkForCorrectValues(massET.text.toString().toDouble(), heightET.text.toString().toDouble(), isImperial)){
-                    val bmi = bmiCounter.countBmi(massET.text.toString().toDouble(), heightET.text.toString().toDouble(), isImperial)
+                val mass = massET.text.toString().toDouble()
+                val height = heightET.text.toString().toDouble()
+                if (bmiCounter.checkForCorrectValues(mass, height, isImperial)){
+                    val bmi = bmiCounter.countBmi(mass, height, isImperial)
                     setBmi(bmi, view)
                     saveBmiResult(bmi)
                     }

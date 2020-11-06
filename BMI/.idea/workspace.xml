@@ -66,7 +66,75 @@
       <recent name="com.example.bmi" />
     </key>
   </component>
-  <component name="RunManager" selected="Android App.app">
+  <component name="RunManager" selected="Android JUnit.CountBmiTest.boundsTestImperial">
+    <configuration name="CountBmiTest.RandomValuesInboundsTestImperial" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.bmi.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.bmi" />
+      <option name="MAIN_CLASS_NAME" value="com.example.bmi.CountBmiTest" />
+      <option name="METHOD_NAME" value="RandomValuesInboundsTestImperial" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CountBmiTest.RandomValuesInboundsTestMetric" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.bmi.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.bmi" />
+      <option name="MAIN_CLASS_NAME" value="com.example.bmi.CountBmiTest" />
+      <option name="METHOD_NAME" value="RandomValuesInboundsTestMetric" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CountBmiTest.boundsTestImperial" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.bmi.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.bmi" />
+      <option name="MAIN_CLASS_NAME" value="com.example.bmi.CountBmiTest" />
+      <option name="METHOD_NAME" value="boundsTestImperial" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CountBmiTest.boundsTestMetric" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.bmi.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.bmi" />
+      <option name="MAIN_CLASS_NAME" value="com.example.bmi.CountBmiTest" />
+      <option name="METHOD_NAME" value="boundsTestMetric" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CountBmiTest.test" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
       <module name="app" />
       <extension name="coverage">
@@ -144,6 +212,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Android JUnit.CountBmiTest.boundsTestImperial" />
+        <item itemvalue="Android JUnit.CountBmiTest.boundsTestMetric" />
+        <item itemvalue="Android JUnit.CountBmiTest.RandomValuesInboundsTestImperial" />
+        <item itemvalue="Android JUnit.CountBmiTest.RandomValuesInboundsTestMetric" />
         <item itemvalue="Android JUnit.CountBmiTest.test" />
       </list>
     </recent_temporary>
@@ -183,6 +255,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1603402591949" />
+    <state x="93" y="93" width="1350" height="638" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1604662614114">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="93" y="93" width="1350" height="638" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.1536.824@0.0.1536.824" timestamp="1604662614114" />
     <state x="998" y="319" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1603287321889">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -207,22 +283,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="118" key="Github.UntrackedFilesDialog/0.0.1536.824@0.0.1536.824" timestamp="1603464282574" />
-    <state width="1491" height="76" key="GridCell.Tab.0.bottom" timestamp="1604260050876">
+    <state width="1491" height="210" key="GridCell.Tab.0.bottom" timestamp="1604662719523">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="76" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1604260050876" />
-    <state width="1491" height="76" key="GridCell.Tab.0.center" timestamp="1604260050876">
+    <state width="1491" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1604662719523" />
+    <state width="1491" height="210" key="GridCell.Tab.0.center" timestamp="1604662719523">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="76" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1604260050876" />
-    <state width="1491" height="76" key="GridCell.Tab.0.left" timestamp="1604260050876">
+    <state width="1491" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1604662719523" />
+    <state width="1491" height="210" key="GridCell.Tab.0.left" timestamp="1604662719523">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="76" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1604260050876" />
-    <state width="1491" height="76" key="GridCell.Tab.0.right" timestamp="1604260050876">
+    <state width="1491" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1604662719523" />
+    <state width="1491" height="210" key="GridCell.Tab.0.right" timestamp="1604662719523">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="76" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1604260050876" />
+    <state width="1491" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1604662719523" />
     <state width="1491" height="76" key="GridCell.Tab.1.bottom" timestamp="1604260050876">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
