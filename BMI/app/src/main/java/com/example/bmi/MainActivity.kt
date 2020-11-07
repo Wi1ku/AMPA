@@ -20,6 +20,10 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     private var isImperial = false
+    val sharPrefKey = "history"
+    val bmiIsZero = "0.00"
+    val imperial = "Imperial"
+    val metric = "Metric"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,12 +69,12 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.selectMetric -> {
-                setUnits("Metric")
+                setUnits(metric)
                 isImperial = false
                 true
             }
             R.id.selectImperial -> {
-                setUnits("Imperial")
+                setUnits(imperial)
                 isImperial = true
                 true
             }
@@ -87,7 +91,7 @@ class MainActivity : AppCompatActivity() {
     fun showBmiDetails(view: View){
         val LAUNCH_SECOND_ACTIVITY = 1
         val bmi = binding.bmiTV.text.toString()
-        if (bmi != "0.00"){
+        if (bmi != bmiIsZero){
             val i = BmiDetails.newIntent(this, bmi)
             startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
         }
@@ -99,22 +103,27 @@ class MainActivity : AppCompatActivity() {
                 val bmiCounter = BMICounter()
                 if (heightET.text.isBlank()) {
                     heightET.error = getString(R.string.height_is_empty)
-                }
-                if (massET.text.isBlank()) {
-                    massET.error = getString(R.string.mass_is_empty)
-                }
-                val mass = massET.text.toString().toDouble()
-                val height = heightET.text.toString().toDouble()
-                if (bmiCounter.checkForCorrectValues(mass, height, isImperial)){
-                    val bmi = bmiCounter.countBmi(mass, height, isImperial)
-                    setBmi(bmi, view)
-                    saveBmiResult(bmi, mass, height)
-                    }
-                else{
-                    val toast = Toast.makeText(applicationContext, R.string.invalid_input_data, Toast.LENGTH_SHORT)
+                    val toast = Toast.makeText(applicationContext, R.string.height_is_empty, Toast.LENGTH_SHORT)
                     toast.show()
+                }
+                else if (massET.text.isBlank()) {
+                    massET.error = getString(R.string.mass_is_empty)
+                    val toast = Toast.makeText(applicationContext, R.string.mass_is_empty, Toast.LENGTH_SHORT)
+                    toast.show()
+                }
+                else{
+                    val mass = massET.text.toString().toDouble()
+                    val height = heightET.text.toString().toDouble()
+                    if (bmiCounter.checkForCorrectValues(mass, height, isImperial)){
+                        val bmi = bmiCounter.countBmi(mass, height, isImperial)
+                        setBmi(bmi, view)
+                        saveBmiResult(bmi, mass, height)
                     }
-
+                    else{
+                        val toast = Toast.makeText(applicationContext, R.string.invalid_input_data, Toast.LENGTH_SHORT)
+                        toast.show()
+                        }
+                    }
                 }
             }
 
@@ -126,13 +135,13 @@ class MainActivity : AppCompatActivity() {
         }
     private fun setUnits(name: String){
         when(name){
-            "Imperial" -> {
+            imperial -> {
                 binding.apply {
                     massTV.text = getString(R.string.mass_lb)
                     heightTV.text = getString(R.string.height_in)
                 }
             }
-            "Metric" -> {
+            metric -> {
                 binding.apply {
                     massTV.text = getString(R.string.mass_kg)
                     heightTV.text = getString(R.string.height_cm)
@@ -174,7 +183,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getHistory(): List<BmiRecord>? {
-        val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val sharedPref = getSharedPreferences(sharPrefKey, Context.MODE_PRIVATE)
         val historyString = sharedPref.getString(getString(R.string.History), "")!!
         return Gson().fromJson<List<BmiRecord>>(historyString)
     }
@@ -182,11 +191,11 @@ class MainActivity : AppCompatActivity() {
     inline fun <reified T> Gson.fromJson(json: String) = fromJson<T>(json, object: TypeToken<T>() {}.type)
 
     fun saveHistory(list: List<BmiRecord>){
-        val sharedPref = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val sharedPref = this.getSharedPreferences(sharPrefKey, Context.MODE_PRIVATE)
         val gson = Gson()
         val json = gson.toJson(list)
         with (sharedPref.edit()) {
-            putString(getString(com.example.bmi.R.string.History), json)
+            putString(getString(R.string.History), json)
             apply()
         }
     }

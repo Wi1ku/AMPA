@@ -17,7 +17,6 @@
     <string name="your_result">Your result is:</string>
     <string name="invalid_input_data">Data you entered cannot be calculated</string>
     <string name="History">History</string>
-    <string name="preference_file_key">history</string>
 
 
 </resources>
