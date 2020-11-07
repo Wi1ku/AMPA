@@ -96,7 +96,6 @@ class MainActivity : AppCompatActivity() {
 
     fun count(view: View) {
             binding.apply {
-                //TODO oprogramowac liczenie bmi i sprawdzanie danych wejsciowych lepiej
                 val bmiCounter = BMICounter()
                 if (heightET.text.isBlank()) {
                     heightET.error = getString(R.string.height_is_empty)
@@ -176,7 +175,7 @@ class MainActivity : AppCompatActivity() {
 
     fun getHistory(): List<BmiRecord>? {
         val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-        val historyString = sharedPref.getString(getString(R.string.history), "")!!
+        val historyString = sharedPref.getString(getString(R.string.History), "")!!
         return Gson().fromJson<List<BmiRecord>>(historyString)
     }
 
@@ -187,7 +186,7 @@ class MainActivity : AppCompatActivity() {
         val gson = Gson()
         val json = gson.toJson(list)
         with (sharedPref.edit()) {
-            putString(getString(com.example.bmi.R.string.history), json)
+            putString(getString(com.example.bmi.R.string.History), json)
             apply()
         }
     }

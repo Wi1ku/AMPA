@@ -38,7 +38,7 @@ class BMIHistory : Activity() {
 
     fun getHistory(): List<BmiRecord> {
         val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-        val historyString = sharedPref.getString(getString(R.string.history), "")!!
+        val historyString = sharedPref.getString(getString(R.string.History), "")!!
         val history = Gson().fromJson<List<BmiRecord>>(historyString)
         return history
     }

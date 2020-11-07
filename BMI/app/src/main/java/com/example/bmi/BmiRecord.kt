@@ -7,9 +7,22 @@ import java.util.*
 
 @Serializable
 data class BmiRecord(val bmi:Double, val height: Double, val mass:Double, val isImperial:Boolean,  val time: Long){
-    //TODO: strings
-    override fun toString(): String{
+    fun getTime(): String{
         val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm")
-        return sdf.format(Date(Timestamp(time).time)) + " result was: " + bmi.toString()
+        return "Record from " + sdf.format(Date(Timestamp(time).time)).toString()
+    }
+
+    fun getResult(): String {
+        return "Result was: $bmi"
+    }
+
+    fun getMeasures(): String {
+        return "Mass: " + mass + when (isImperial) {
+            true -> "[lbs]"
+            false -> "[kg]"
+        } + "\nHeight: " + height + when (isImperial) {
+            true -> "[inch]"
+            false -> "[cm]"
+        }
     }
 }
