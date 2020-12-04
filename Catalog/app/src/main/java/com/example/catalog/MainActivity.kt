@@ -1,16 +1,24 @@
 package com.example.catalog
 
+import android.app.Application
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+
+    companion object {
+        lateinit var context: Application
+    }
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -21,10 +29,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        context = application
         setContentView(R.layout.activity_main)
         appViewModel = ViewModelProvider(this).get(AppViewModel::class.java)
         viewManager = LinearLayoutManager(this)
-        viewAdapter = ListAdapter(appViewModel)
+        viewAdapter = ListAdapter(appViewModel.bandList.value!!, appViewModel::onFavouriteClick)
 
         recyclerView = findViewById<RecyclerView>(R.id.list).apply {
             setHasFixedSize(true)
@@ -32,6 +41,9 @@ class MainActivity : AppCompatActivity() {
             adapter = viewAdapter
 
         }
+
+        appViewModel.bandList.observe(this, Observer { recyclerView.apply { adapter = ListAdapter(appViewModel.getFilteredBands(), appViewModel::onFavouriteClick) } })
+        appViewModel.selectedCat.observe(this, Observer { recyclerView.apply { adapter = ListAdapter(appViewModel.getFilteredBands(), appViewModel::onFavouriteClick) } })
 
     }
 
@@ -47,10 +59,25 @@ class MainActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
         }
-        spinner.setOnItemSelectedListener(appViewModel)
+        spinner.onItemSelectedListener = this
+        spinner.setSelection(appViewModel.getSelectedCatIndex())
         return true
 
     }
+
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        if (parent != null) {
+             appViewModel.onCategorySelected(position)
+        }
+
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        appViewModel.onCategorySelected(-1)
+    }
+
+
 
 
 }
