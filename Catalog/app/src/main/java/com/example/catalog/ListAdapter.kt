@@ -32,6 +32,7 @@ class ListAdapter(private val list: MutableList<ListElement>, val onFavouriteCli
 
         override fun onClick(v: View) {
             val intent = Intent(v.context, DetailsActivity::class.java).apply {
+                //TODO: remove hardcoded
                 putExtra("id", list[layoutPosition].id)
             }
             v.context.startActivity(intent)

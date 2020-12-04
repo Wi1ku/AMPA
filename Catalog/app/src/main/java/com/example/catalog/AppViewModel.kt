@@ -6,8 +6,11 @@ import android.widget.AdapterView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.ItemTouchHelper
 
-class AppViewModel() : ViewModel() {
+class AppViewModel : ViewModel() {
+
+    var categories: Array<String> = arrayOf()
 
     private val _selectedCat: MutableLiveData<String> = MutableLiveData("")
     var selectedCat: LiveData<String> = _selectedCat
@@ -21,32 +24,42 @@ class AppViewModel() : ViewModel() {
 
 
     fun getFilteredBands(): MutableList<ListElement> {
-        return if(selectedCat.value == "All Categories") {
-            bandList.value!!
-        } else if (selectedCat.value == "Favourites"){
-            bandList.value!!.filter { band -> band.isFavourite }.toMutableList()
-        } else
-            bandList.value!!.filter { band -> band.category ==  selectedCat.value}.toMutableList()
+        return when {
+            //TODO: remove hardcoded strings
+            (selectedCat.value == "All Categories") -> bandList.value!!
+            (selectedCat.value == "Favourites") -> bandList.value!!.filter { band -> band.isFavourite }
+                .toMutableList()
+            else -> bandList.value!!.filter { band -> band.category == selectedCat.value }
+                .toMutableList()
+        }
     }
 
     fun onFavouriteClick(band: ListElement, isfav: Boolean){
         band.isFavourite = !isfav
     }
 
-
-    override fun onCleared() {
-        super.onCleared()
+    fun onSwipe(index: Int){
+        _bandList.value?.removeAt(index)
+        _bandList.value = _bandList.value //this notifies observers that the value has changed
     }
 
+    fun loadCategories(cat: Array<String>){ //loads categories from Rescources
+        categories = cat
+    }
+
+
+
     fun onCategorySelected(categoryPos: Int) {
-        _selectedCat.value = MainActivity.context.resources.getStringArray(R.array.filters)[categoryPos]
+        _selectedCat.value = categories[categoryPos]
     }
 
     fun getSelectedCatIndex(): Int {
-        val filterArray =  MainActivity.context.resources.getStringArray(R.array.filters)
+        val filterArray =  categories
         for ((i, string) in filterArray.withIndex()){
             if (string == selectedCat.value) return i
         }
         return -1
     }
 }
+
+
