@@ -32,8 +32,9 @@ class ListAdapter(private val model: AppViewModel) :
         }
 
         override fun onClick(v: View) {
-            model.clickedPosition.value = layoutPosition
-            val intent = Intent(v.context, DetailsActivity::class.java)
+            val intent = Intent(v.context, DetailsActivity::class.java).apply {
+                putExtra("id", model.bandList.value?.get(layoutPosition)?.id)
+            }
             v.context.startActivity(intent)
         }
     }

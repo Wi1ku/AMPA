@@ -27,12 +27,14 @@ class detail_main : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val model = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-        val position = model.clickedPosition.value
-        if(position != null){
-            val band = model.bandList.value?.get(position)!!
-            val text = view.findViewById<TextView>(R.id.desc)
-            text.text = band.description
+        val bandlist = ViewModelProvider(requireActivity()).get(AppViewModel::class.java).bandList.value
+        val id = (activity as DetailsActivity).clickedElementId
+        if(bandlist != null){
+            val band = bandlist.find { it.id == id}
+            if (band != null){
+                val text = view.findViewById<TextView>(R.id.desc)
+                text.text = band.description
+            }
         }
 
 
