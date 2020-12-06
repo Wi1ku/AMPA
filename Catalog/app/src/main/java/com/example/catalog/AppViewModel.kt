@@ -16,10 +16,10 @@ class AppViewModel : ViewModel() {
     var selectedCat: LiveData<String> = _selectedCat
 
     private val _bandList: MutableLiveData<MutableList<ListElement>> = MutableLiveData(mutableListOf(
-        ListElement(1,"Beatles", "Rock", R.drawable.ic_launcher_background, "beatels", listOf(Album("Abbey Road", "1969", R.drawable.ic_launcher_foreground)), false),
-        ListElement(2,"Fleetwood Mac", "Rock", R.drawable.ic_launcher_background, "fm", listOf(),false),
-        ListElement(3,"Jimi Hendrix", "Rock", R.drawable.ic_launcher_background, "JH", listOf(),false),
-        ListElement(4,"Miles Davis", "Jazz", R.drawable.ic_launcher_foreground, "MD", listOf(),false)))
+        ListElement(1,"Beatles", "Rock", R.drawable.ic_launcher_background, "beatels", listOf(Album("Abbey Road", "1969", R.drawable.ic_launcher_foreground)), listOf(R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground), false),
+        ListElement(2,"Fleetwood Mac", "Rock", R.drawable.ic_launcher_background, "fm", listOf(),listOf(),false),
+        ListElement(3,"Jimi Hendrix", "Rock", R.drawable.ic_launcher_background, "JH", listOf(),listOf(),false),
+        ListElement(4,"Miles Davis", "Jazz", R.drawable.ic_launcher_foreground, "MD", listOf(),listOf(),false)))
     var bandList: LiveData<MutableList<ListElement>> = _bandList
 
 
