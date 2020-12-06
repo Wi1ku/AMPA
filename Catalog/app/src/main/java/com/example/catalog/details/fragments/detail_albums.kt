@@ -1,0 +1,58 @@
+package com.example.catalog
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.catalog.details.fragments.albums_adapter
+
+
+class detail_albums : Fragment() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle
+        ?
+    ): View? {
+
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_detail_albums, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val bandlist = ViewModelProvider(requireActivity()).get(AppViewModel::class.java).bandList.value
+        val id = (activity as DetailsActivity).clickedElementId
+        if(bandlist != null){
+            val band = bandlist.find { it.id == id}
+            if (band != null){
+                viewManager = LinearLayoutManager(this.context)
+                viewAdapter = albums_adapter(band.albums)
+                recyclerView = view.findViewById<RecyclerView>(R.id.albums).apply {
+                    setHasFixedSize(true)
+                    layoutManager = viewManager
+                    adapter = viewAdapter
+
+                }
+
+            }
+        }
+
+
+    }
+}

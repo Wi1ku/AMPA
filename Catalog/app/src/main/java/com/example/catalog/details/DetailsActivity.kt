@@ -8,7 +8,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 
 
-val fragments = listOf(Pair("Description", detail_main()), Pair("Album List",detail_albums()), Pair("Gallery", detail_gallery()))
+val fragment_names = listOf("Description", "Album List", "Gallery")
+val fragments  = listOf(detail_main(), detail_albums(), detail_gallery())
 
 class DetailsActivity : AppCompatActivity() {
     var clickedElementId: Int = -1
@@ -16,6 +17,7 @@ class DetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //TODO: hardcoded
         val i = intent.getIntExtra("id", -1)
         clickedElementId = i
         setContentView(R.layout.activity_details)
@@ -27,7 +29,7 @@ class DetailsActivity : AppCompatActivity() {
 
         TabLayoutMediator(findViewById(R.id.tab_layout), viewPager,
             TabLayoutMediator.OnConfigureTabCallback { tab, position -> // Styling each tab here
-                tab.text = fragments[position].first
+                tab.text = fragment_names[position]
             }).attach()
     }
 
@@ -36,7 +38,7 @@ class DetailsActivity : AppCompatActivity() {
 
         override fun getItemCount(): Int = fragments.size
 
-        override fun createFragment(position: Int): Fragment = fragments[position].second
+        override fun createFragment(position: Int): Fragment = fragments[position]
     }
 
 }
