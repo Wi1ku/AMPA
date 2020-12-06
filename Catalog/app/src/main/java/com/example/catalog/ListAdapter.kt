@@ -60,6 +60,15 @@ class ListAdapter(private val list: MutableList<ListElement>, val onFavouriteCli
         viewHolder.name.text = viewHolder.itemView.context.getString(R.string.ListElementName, band.name)
         viewHolder.category.text = viewHolder.itemView.context.getString(R.string.ListElementCategory, band.category)
         viewHolder.image.setImageResource(band.image_id)
+        if(band.category == "Rock"){
+            viewHolder.element.setBackgroundColor(viewHolder.itemView.context.getColor(R.color.slate_gray))
+        }
+        if(band.category == "Jazz"){
+            viewHolder.element.setBackgroundColor(viewHolder.itemView.context.getColor(R.color.powder_blue))
+        }
+        if(band.category == "Pop"){
+            viewHolder.element.setBackgroundColor(viewHolder.itemView.context.getColor(R.color.medium_slate_blue))
+        }
         if(band.isFavourite){
             viewHolder.favourte_btn.setImageResource(android.R.drawable.btn_star_big_on)
         }

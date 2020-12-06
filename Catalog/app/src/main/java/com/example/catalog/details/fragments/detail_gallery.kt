@@ -39,7 +39,6 @@ class detail_gallery : Fragment() {
         if (bandlist != null) {
             val band = bandlist.find { it.id == id }
             if (band != null) {
-
                 viewManager = GridLayoutManager(this.context, 3)
                 viewAdapter = gallery_adapter(band.images)
                 recyclerView = view.findViewById<RecyclerView>(R.id.gallery).apply {
