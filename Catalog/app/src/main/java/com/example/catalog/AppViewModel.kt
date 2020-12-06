@@ -13,7 +13,7 @@ class AppViewModel : ViewModel() {
 
     var categories: Array<String> = arrayOf()
 
-    private val _selectedCat: MutableLiveData<String> = MutableLiveData("")
+    private val _selectedCat: MutableLiveData<String> = MutableLiveData(EMPTYSTRING)
     var selectedCat: LiveData<String> = _selectedCat
 
     private val _bandList: MutableLiveData<MutableList<ListElement>> = MutableLiveData(bands)
@@ -22,9 +22,8 @@ class AppViewModel : ViewModel() {
 
     fun getFilteredBands(): MutableList<ListElement> {
         return when {
-            //TODO: remove hardcoded strings
-            (selectedCat.value == "All Categories") -> bandList.value!!
-            (selectedCat.value == "Favourites") -> bandList.value!!.filter { band -> band.isFavourite }
+            (selectedCat.value == NOFILTER) -> bandList.value!!
+            (selectedCat.value == FAVOURITES) -> bandList.value!!.filter { band -> band.isFavourite }
                 .toMutableList()
             else -> bandList.value!!.filter { band -> band.category == selectedCat.value }
                 .toMutableList()
@@ -58,6 +57,8 @@ class AppViewModel : ViewModel() {
         return -1
     }
 }
+
+/* WARINING  - LOTS OF HARDCODED DATA - realistically we get those from somewhere else*/
 
 val bands = mutableListOf(
     ListElement(1,

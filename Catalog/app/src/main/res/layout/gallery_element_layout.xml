@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/gallery_cv"
         android:layout_gravity="center"
-        app:cardElevation="3dp"
+        app:cardElevation="@dimen/gallery_card_elevation"
         app:cardUseCompatPadding="true"
         >
 
@@ -23,8 +23,8 @@
 
 
             <ImageView
-                android:layout_width="108dp"
-                android:layout_height="108dp"
+                android:layout_width="@dimen/album_cover_size"
+                android:layout_height="@dimen/album_cover_size"
                 android:id="@+id/photo"
                 android:layout_gravity="center"
 

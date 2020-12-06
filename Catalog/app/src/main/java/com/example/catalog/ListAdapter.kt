@@ -13,11 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 
 
+
 class ListAdapter(private val list: MutableList<ListElement>, val onFavouriteClick: (ListElement, Boolean) -> Unit) :
     RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View, l: List<ListElement>) : RecyclerView.ViewHolder(view), View.OnClickListener {
-        val element = view.findViewById<ConstraintLayout>(R.id.record)
+        val element: ConstraintLayout = view.findViewById<ConstraintLayout>(R.id.record)
         val name: TextView = view.findViewById(R.id.Name)
         val category: TextView = view.findViewById(R.id.Category)
         val image: ImageView = view.findViewById(R.id.imageView)
@@ -25,24 +26,20 @@ class ListAdapter(private val list: MutableList<ListElement>, val onFavouriteCli
         val list = l
 
         init {
-            // Define click listener for the ViewHolder's View.
             itemView.setOnClickListener(this)
         }
 
 
         override fun onClick(v: View) {
             val intent = Intent(v.context, DetailsActivity::class.java).apply {
-                //TODO: remove hardcoded
-                putExtra("id", list[layoutPosition].id)
+                putExtra(EXTRANAME, list[layoutPosition].id)
             }
             v.context.startActivity(intent)
         }
 
     }
 
-    // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.record_layout, viewGroup, false)
 
@@ -50,23 +47,20 @@ class ListAdapter(private val list: MutableList<ListElement>, val onFavouriteCli
         return ViewHolder(view, list)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
 
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
         val band = list[position]
         viewHolder.name.text = viewHolder.itemView.context.getString(R.string.ListElementName, band.name)
         viewHolder.category.text = viewHolder.itemView.context.getString(R.string.ListElementCategory, band.category)
         viewHolder.image.setImageResource(band.image_id)
-        if(band.category == "Rock"){
+        if(band.category == ROCK){
             viewHolder.element.setBackgroundColor(viewHolder.itemView.context.getColor(R.color.slate_gray))
         }
-        if(band.category == "Jazz"){
+        if(band.category == POP){
             viewHolder.element.setBackgroundColor(viewHolder.itemView.context.getColor(R.color.powder_blue))
         }
-        if(band.category == "Pop"){
+        if(band.category == JAZZ){
             viewHolder.element.setBackgroundColor(viewHolder.itemView.context.getColor(R.color.medium_slate_blue))
         }
         if(band.isFavourite){
@@ -89,7 +83,6 @@ class ListAdapter(private val list: MutableList<ListElement>, val onFavouriteCli
 
 
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = list.count()
 
 }

@@ -11,32 +11,21 @@ class gallery_adapter(private val images: List<Int>) :
     RecyclerView.Adapter<gallery_adapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val image: ImageView
+        val image: ImageView = view.findViewById(R.id.photo)
 
-        init {
-            // Define click listener for the ViewHolder's View.
-            image = view.findViewById(R.id.photo)
-        }
     }
 
-    // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.gallery_element_layout, viewGroup, false)
 
         return ViewHolder(view)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
         viewHolder.image.setImageResource(images[position])
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = images.size
 
 }

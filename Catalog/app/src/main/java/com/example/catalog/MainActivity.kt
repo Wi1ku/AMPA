@@ -15,8 +15,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-private const val DRAGDIRECTIONS = 0
-private const val DEFAULTCATEGORYPOSITION = -1
+
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 

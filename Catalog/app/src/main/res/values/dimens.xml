@@ -1,4 +1,18 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="sizeOfTabLayout">24dp</dimen>
+    <dimen name="album_cover_size">108dp</dimen>
+    <dimen name="gallery_card_elevation">3dp</dimen>
+    <dimen name="fav_btn_height">37dp</dimen>
+    <dimen name="fav_btn_width">39dp</dimen>
+    <dimen name="fav_btn_margin_start">139dp</dimen>
+    <dimen name="def_margin_start">50dp</dimen>
+    <dimen name="def_margin_top">10dp</dimen>
+    <dimen name="def_margin_end">50dp</dimen>
+    <dimen name="def_margin_bottom">10dp</dimen>
+    <dimen name="divider_width">353dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+    <dimen name="cat_tv_vertical_bias">0.325</dimen>
+    <dimen name="cat_tv_horizontal_bias">0.487</dimen>
+    <dimen name="name_tv_horizontal_bias">0.238</dimen>
 </resources>

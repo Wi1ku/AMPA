@@ -17,6 +17,7 @@ class detail_gallery : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private val GRIDSPAN = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +28,6 @@ class detail_gallery : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_detail_gallery, container, false)
     }
 
@@ -39,7 +39,7 @@ class detail_gallery : Fragment() {
         if (bandlist != null) {
             val band = bandlist.find { it.id == id }
             if (band != null) {
-                viewManager = GridLayoutManager(this.context, 3)
+                viewManager = GridLayoutManager(this.context, GRIDSPAN)
                 viewAdapter = gallery_adapter(band.images)
                 recyclerView = view.findViewById<RecyclerView>(R.id.gallery).apply {
                     setHasFixedSize(true)
