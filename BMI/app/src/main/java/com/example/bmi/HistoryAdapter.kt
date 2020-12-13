@@ -5,6 +5,7 @@ import android.view.*
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bmi.Room.BmiRecord
 
 class HistoryAdapter(private val Dataset: List<BmiRecord>) :
     RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
@@ -24,9 +25,9 @@ class HistoryAdapter(private val Dataset: List<BmiRecord>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.date.text = Dataset[position].getTime()
-        holder.record.text = Dataset[position].getResult()
-        holder.measures.text = Dataset[position].getMeasures()
+        holder.date.text = Fomatter.getTime(Dataset[position].time)
+        holder.record.text = Fomatter.getResult(Dataset[position].bmi)
+        holder.measures.text = Fomatter.getMeasures(Dataset[position])
     }
 
     override fun getItemCount() = Dataset.size

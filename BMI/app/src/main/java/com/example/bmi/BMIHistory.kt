@@ -5,6 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bmi.Room.AppDatabase
+import com.example.bmi.Room.BmiRecord
+import com.example.bmi.Room.RecordDao
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -12,12 +15,13 @@ class BMIHistory : Activity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
-    val sharPrefKey = "history"
+    private lateinit var databaseDao: RecordDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.bmi_history)
-        var history = getHistory()
+        databaseDao = AppDatabase.getDatabase(this).RecordDao()
+        val history = databaseDao.getAll()
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = HistoryAdapter(history)
@@ -29,15 +33,6 @@ class BMIHistory : Activity() {
 
         }
     }
-
-    fun getHistory(): List<BmiRecord> {
-        val sharedPref = getSharedPreferences(sharPrefKey, Context.MODE_PRIVATE)
-        val historyString = sharedPref.getString(getString(R.string.History), "")!!
-        return Gson().fromJson<List<BmiRecord>>(historyString) ?: emptyList()
-    }
-
-    inline fun <reified T> Gson.fromJson(json: String) = fromJson<T>(json, object: TypeToken<T>() {}.type)
-
 
     companion object {
 

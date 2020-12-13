@@ -9,6 +9,9 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.bmi.Room.AppDatabase
+import com.example.bmi.Room.BmiRecord
+import com.example.bmi.Room.RecordDao
 import com.example.bmi.databinding.ActivityMainBinding
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -20,15 +23,16 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     private var isImperial = false
-    val sharPrefKey = "history"
     val bmiIsZero = "0.00"
     val imperial = "Imperial"
     val metric = "Metric"
+    lateinit var databaseDao: RecordDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
+        databaseDao = AppDatabase.getDatabase(this).RecordDao()
         setContentView(view)
     }
 
@@ -167,37 +171,17 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun saveBmiResult(bmi: Double, mass: Double, height: Double){
-        val record = BmiRecord(bmi, mass, height, isImperial, Calendar.getInstance().timeInMillis)
-        var history = getHistory()
-        if(history == null){
-            history = mutableListOf<BmiRecord>()
+        val record = BmiRecord(
+            bmi,
+            mass,
+            height,
+            isImperial,
+            Calendar.getInstance().timeInMillis
+        )
+        if(databaseDao.count() > 10) {
+            databaseDao.delete(databaseDao.getOldest())
         }
-        else{
-            history = history.toMutableList()
-        }
-        if(history.size > 9){
-            history.removeFirst()
-        }
-        history.add(record)
-        saveHistory(history)
-    }
-
-    fun getHistory(): List<BmiRecord>? {
-        val sharedPref = getSharedPreferences(sharPrefKey, Context.MODE_PRIVATE)
-        val historyString = sharedPref.getString(getString(R.string.History), "")!!
-        return Gson().fromJson<List<BmiRecord>>(historyString)
-    }
-
-    inline fun <reified T> Gson.fromJson(json: String) = fromJson<T>(json, object: TypeToken<T>() {}.type)
-
-    fun saveHistory(list: List<BmiRecord>){
-        val sharedPref = this.getSharedPreferences(sharPrefKey, Context.MODE_PRIVATE)
-        val gson = Gson()
-        val json = gson.toJson(list)
-        with (sharedPref.edit()) {
-            putString(getString(R.string.History), json)
-            apply()
-        }
+        databaseDao.insertAll(record)
     }
 
 }
