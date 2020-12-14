@@ -1,0 +1,9 @@
+package com.example.bmi
+
+const val VERYSEVERLYUNDERWEIGHT_END_VAL = 16
+const val SEVERLYUNDERWEIGHT_END_VAL = 17
+const val UNDERWEIGHT_END_VAL = 18.5
+const val NORMAL_END_VAL = 26
+const val OVERWEIGHT_END_VAL = 30
+const val MODERATLYOBESE_END_VAL = 35
+const val SEVERLYOBESE_END_VAL = 40

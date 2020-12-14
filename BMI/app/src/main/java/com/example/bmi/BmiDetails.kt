@@ -23,37 +23,37 @@ class BmiDetails : Activity() {
                 resultInfoTV.text = bmi_string
                 val bmi = bmi_string.toDouble()
                 when {
-                    bmi < 16 -> {
+                    bmi < VERYSEVERLYUNDERWEIGHT_END_VAL -> {
                         resultInfoTV.setTextColor(getColor(R.color.colorVeryServerlyUnderweight))
-                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, "Very Serverly Underweight")
+                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, getString(R.string.Very_Serverly_Underweight))
                     }
-                    (bmi >= 16) and (bmi < 17) -> {
+                    (bmi >= VERYSEVERLYUNDERWEIGHT_END_VAL) and (bmi < SEVERLYUNDERWEIGHT_END_VAL) -> {
                         resultInfoTV.setTextColor(getColor(R.color.colorServerlyUnderweight))
-                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, "Serverly Underweight")
+                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, getString(R.string.Serverly_Underweight))
                     }
-                    (bmi >= 17) and (bmi < 18.5) -> {
+                    (bmi >= SEVERLYUNDERWEIGHT_END_VAL) and (bmi < UNDERWEIGHT_END_VAL) -> {
                         resultInfoTV.setTextColor(getColor(R.color.colorUnderweight))
-                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, "Underweight")
+                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, getString(R.string.Underweight))
                     }
-                    (bmi >= 18.5) and (bmi < 26) -> {
+                    (bmi >= UNDERWEIGHT_END_VAL) and (bmi < NORMAL_END_VAL) -> {
                         resultInfoTV.setTextColor(getColor(R.color.colorNormal))
-                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, "Normal")
+                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, getString(R.string.Normal))
                     }
-                    (bmi >= 25) and (bmi < 30) -> {
+                    (bmi >= NORMAL_END_VAL) and (bmi < OVERWEIGHT_END_VAL) -> {
                         resultInfoTV.setTextColor(getColor(R.color.colorOverweight))
-                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, "Overweight")
+                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, getString(R.string.Overweight))
                     }
-                    (bmi >= 30) and (bmi < 35) -> {
+                    (bmi >= OVERWEIGHT_END_VAL) and (bmi < MODERATLYOBESE_END_VAL) -> {
                         resultInfoTV.setTextColor(getColor(R.color.colorModeratlyObese))
-                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, "Moderately obese")
+                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, getString(R.string.Moderately_obese))
                     }
-                    (bmi >= 35) and (bmi < 40) -> {
+                    (bmi >= MODERATLYOBESE_END_VAL) and (bmi < SEVERLYOBESE_END_VAL) -> {
                         resultInfoTV.setTextColor(getColor(R.color.colorServerlyObese))
-                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, "Serverly obese")
+                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, getString(R.string.Serverly_obese))
                     }
-                    bmi >= 40 -> {
+                    bmi >= SEVERLYOBESE_END_VAL -> {
                         resultInfoTV.setTextColor(getColor(R.color.colorVeryServerlyObese))
-                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, "Very serverly obese")
+                        descriptionTV.text = getString(R.string.bmi_desc).format(bmi, getString(R.string.Very_serverly_obese))
                     }
                 }
             }

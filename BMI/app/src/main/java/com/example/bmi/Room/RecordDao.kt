@@ -5,18 +5,18 @@ import androidx.room.*
 @Dao
 interface RecordDao {
     @Query("SELECT * FROM bmirecord")
-    fun getAll(): List<BmiRecord>
+    suspend fun getAll(): List<BmiRecord>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg records: BmiRecord)
+    suspend fun insertAll(vararg records: BmiRecord)
 
     @Query("SELECT count(*) FROM bmirecord")
-    fun count(): Int
+    suspend fun count(): Int
 
     @Query("SELECT * FROM bmirecord WHERE time = (SELECT MIN(time) FROM bmirecord)")
-    fun getOldest(): BmiRecord
+    suspend fun getOldest(): BmiRecord
 
     @Delete
-    fun delete(record: BmiRecord)
+    suspend fun delete(record: BmiRecord)
 
 }

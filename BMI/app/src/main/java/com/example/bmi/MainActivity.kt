@@ -16,6 +16,7 @@ import com.example.bmi.databinding.ActivityMainBinding
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.*
+import kotlinx.coroutines.runBlocking
 
 
 @ExperimentalStdlibApi
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     val imperial = "Imperial"
     val metric = "Metric"
     lateinit var databaseDao: RecordDao
+    val HistoryListLimit = 9
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -157,14 +159,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun colourBmi(bmi: Double, textView: TextView){
         when {
-            bmi < 16 -> textView.setTextColor(getColor(R.color.colorVeryServerlyUnderweight))
-            (bmi >= 16) and (bmi < 17) -> textView.setTextColor(getColor(R.color.colorServerlyUnderweight))
-            (bmi >= 17) and (bmi < 18.5) -> textView.setTextColor(getColor(R.color.colorUnderweight))
-            (bmi >= 18.5) and (bmi < 26) -> textView.setTextColor(getColor(R.color.colorNormal))
-            (bmi >= 25) and (bmi < 30) -> textView.setTextColor(getColor(R.color.colorOverweight))
-            (bmi >= 30) and (bmi < 35) -> textView.setTextColor(getColor(R.color.colorModeratlyObese))
-            (bmi >= 35) and (bmi < 40) -> textView.setTextColor(getColor(R.color.colorServerlyObese))
-            bmi >= 40 -> textView.setTextColor(getColor(R.color.colorVeryServerlyObese))
+            bmi < VERYSEVERLYUNDERWEIGHT_END_VAL -> textView.setTextColor(getColor(R.color.colorVeryServerlyUnderweight))
+            (bmi >= VERYSEVERLYUNDERWEIGHT_END_VAL) and (bmi < SEVERLYUNDERWEIGHT_END_VAL) -> textView.setTextColor(getColor(R.color.colorServerlyUnderweight))
+            (bmi >= SEVERLYUNDERWEIGHT_END_VAL) and (bmi < UNDERWEIGHT_END_VAL) -> textView.setTextColor(getColor(R.color.colorUnderweight))
+            (bmi >= UNDERWEIGHT_END_VAL) and (bmi < NORMAL_END_VAL) -> textView.setTextColor(getColor(R.color.colorNormal))
+            (bmi >= NORMAL_END_VAL) and (bmi < OVERWEIGHT_END_VAL) -> textView.setTextColor(getColor(R.color.colorOverweight))
+            (bmi >= OVERWEIGHT_END_VAL) and (bmi < MODERATLYOBESE_END_VAL) -> textView.setTextColor(getColor(R.color.colorModeratlyObese))
+            (bmi >= MODERATLYOBESE_END_VAL) and (bmi < SEVERLYOBESE_END_VAL) -> textView.setTextColor(getColor(R.color.colorServerlyObese))
+            bmi >= SEVERLYOBESE_END_VAL -> textView.setTextColor(getColor(R.color.colorVeryServerlyObese))
         }
     }
 
@@ -178,10 +180,12 @@ class MainActivity : AppCompatActivity() {
             isImperial,
             Calendar.getInstance().timeInMillis
         )
-        if(databaseDao.count() > 10) {
+        runBlocking{
+        if(databaseDao.count() > HistoryListLimit) {
             databaseDao.delete(databaseDao.getOldest())
         }
         databaseDao.insertAll(record)
+        }
     }
 
 }

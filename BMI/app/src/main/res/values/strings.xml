@@ -17,6 +17,14 @@
     <string name="your_result">Your result is:</string>
     <string name="invalid_input_data">Data you entered cannot be calculated</string>
     <string name="History">History</string>
+    <string name="Very_Serverly_Underweight">Very Serverly Underweight</string>
+    <string name="Serverly_Underweight">Serverly Underweight</string>
+    <string name="Underweight">Underweight</string>
+    <string name="Normal">Normal</string>
+    <string name="Overweight">Overweight</string>
+    <string name="Moderately_obese">Moderately obese</string>
+    <string name="Serverly_obese">Serverly obese</string>
+    <string name="Very_serverly_obese">Very serverly obese</string>
 
 
 </resources>

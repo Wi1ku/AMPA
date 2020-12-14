@@ -10,6 +10,7 @@ import com.example.bmi.Room.BmiRecord
 import com.example.bmi.Room.RecordDao
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.runBlocking
 
 class BMIHistory : Activity() {
     private lateinit var recyclerView: RecyclerView
@@ -21,7 +22,8 @@ class BMIHistory : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.bmi_history)
         databaseDao = AppDatabase.getDatabase(this).RecordDao()
-        val history = databaseDao.getAll()
+        val history = getHistory()
+
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = HistoryAdapter(history)
@@ -31,6 +33,12 @@ class BMIHistory : Activity() {
             layoutManager = viewManager
             adapter = viewAdapter
 
+        }
+    }
+
+    private fun getHistory(): List<BmiRecord>{
+        return runBlocking {
+            databaseDao.getAll()
         }
     }
 
