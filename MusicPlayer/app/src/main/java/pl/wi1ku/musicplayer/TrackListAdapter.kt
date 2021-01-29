@@ -11,10 +11,12 @@ class TrackListAdapter (private val tracks: List<AudioFile>, private val clickLi
     RecyclerView.Adapter<TrackListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView
+        val track: TextView
+        val artist: TextView
         init {
             // Define click listener for the ViewHolder's View.
-            textView = view.findViewById(R.id.textView)
+            track = view.findViewById(R.id.tn_tv)
+            artist = view.findViewById(R.id.a_tv)
         }
     }
 
@@ -32,7 +34,8 @@ class TrackListAdapter (private val tracks: List<AudioFile>, private val clickLi
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.textView.text = tracks[position].name
+        viewHolder.track.text = tracks[position].name
+        viewHolder.artist.text = tracks[position].artist
         viewHolder.itemView.setOnClickListener { clickListener(tracks[position]) }
     }
 

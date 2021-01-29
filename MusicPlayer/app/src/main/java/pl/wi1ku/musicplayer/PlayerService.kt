@@ -4,14 +4,20 @@ import android.app.*
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import android.net.Uri
-import android.os.*
+import android.os.Binder
+import android.os.Build
+import android.os.IBinder
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import java.util.*
 
+interface SongChangedListener {
+    fun onSongChanged()
+}
 
 class PlayerService : Service() {
+
+
 
     inner class PlayerBinder : Binder() {
         // Return this instance of LocalService so clients can call public methods
@@ -20,9 +26,12 @@ class PlayerService : Service() {
 
     // Binder given to clients
     private val binder = PlayerBinder()
+    private val songQ = LinkedList<AudioFile>()
+    private var currentTrackIndex = -1
+    private val mListeners = ArrayList<SongChangedListener>()
 
-
-    private var mediaPlayer: MediaPlayer? = null
+    var mediaPlayer: MediaPlayer? = null
+    var isPaused = true
     // Notification ID cannot be 0.
     val NOTIFICATION_ID = 1
     val NOTIFICATION_CHANNEL_ID = "MusicPlayerChannel"
@@ -39,19 +48,11 @@ class PlayerService : Service() {
         val notification: Notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
             .setContentTitle(getText(R.string.notification_title))
             .setContentText(getText(R.string.notification_message))
-            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setSmallIcon(android.R.drawable.ic_lock_silent_mode_off)
             .setContentIntent(pendingIntent)
-            .setTicker(getText(R.string.ticker_text))
             .build()
 
         startForeground(NOTIFICATION_ID, notification)
-
-        val extras = intent.extras
-
-        if (extras != null) {
-            val uriString = extras.getString("URI", "")
-
-            val uri = Uri.parse(uriString)
 
             mediaPlayer = MediaPlayer().apply {
                 setAudioAttributes(
@@ -60,13 +61,9 @@ class PlayerService : Service() {
                         .setUsage(AudioAttributes.USAGE_MEDIA)
                         .build()
                 )
-                setDataSource(applicationContext, uri)
-                prepare()
-                start()
-            }
+                setOnCompletionListener { onCompletion(this) }
 
 
-            Toast.makeText(this, "playing", Toast.LENGTH_SHORT).show()
         }
             return START_NOT_STICKY
 
@@ -78,7 +75,6 @@ class PlayerService : Service() {
 
     override fun onDestroy() {
         mediaPlayer?.stop()
-        Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show()
     }
 
     private fun createNotificationChannel() {
@@ -94,4 +90,104 @@ class PlayerService : Service() {
             manager.createNotificationChannel(serviceChannel)
         }
     }
+
+    fun addSongToQ(track: AudioFile){
+        songQ.add(track)
+        Toast.makeText(this, "Added ${track.name} to Queue", Toast.LENGTH_SHORT).show()
+        if (songQ.size == 1){
+            prepareNewTrack()
+        }
+    }
+
+    private fun prepareNewTrack(){
+        if (mediaPlayer != null && songQ.size != 0){
+            if (mediaPlayer != null && currentTrackIndex < songQ.size-1){
+                mediaPlayer!!.reset()
+                currentTrackIndex++
+                mediaPlayer!!.setDataSource(applicationContext, songQ[currentTrackIndex].uri)
+                notifySongChanged()
+                mediaPlayer!!.prepare()
+            }
+            else if (mediaPlayer != null && currentTrackIndex <= 0){
+                mediaPlayer!!.reset()
+                mediaPlayer!!.setDataSource(applicationContext, songQ[currentTrackIndex].uri)
+                mediaPlayer!!.prepare()
+            }
+        }
+    }
+
+    fun onPlayPause(){
+        if (mediaPlayer != null){
+            if(!mediaPlayer!!.isPlaying){
+                mediaPlayer!!.start()
+                isPaused = false
+            } else {
+                mediaPlayer!!.pause()
+                isPaused = true
+            }
+        }
+    }
+
+    private fun onCompletion(player: MediaPlayer){
+        prepareNewTrack()
+    }
+
+    fun onNext(){
+        if (mediaPlayer != null && currentTrackIndex >= 0){
+            mediaPlayer!!.reset()
+            prepareNewTrack()
+            mediaPlayer!!.start()
+            isPaused = false
+        }
+    }
+
+    fun onPrevious(){
+        if (mediaPlayer != null && currentTrackIndex > 0){
+            mediaPlayer!!.reset()
+            currentTrackIndex -= 2
+            prepareNewTrack()
+            mediaPlayer!!.start()
+            isPaused = false
+        }
+    }
+
+    fun onStop(){
+        if (mediaPlayer != null){
+            mediaPlayer!!.reset()
+            isPaused = true
+        }
+
+    }
+
+    fun onFF10(){
+        if (mediaPlayer != null && currentTrackIndex >= 0){
+            mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition + 10000)
+        }
+    }
+
+    fun onFB10(){
+        if (mediaPlayer != null && currentTrackIndex >= 0){
+            mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition - 10000)
+        }
+    }
+
+    fun registerListener(listener: SongChangedListener) {
+        mListeners.add(listener)
+    }
+
+    fun unregisterListener(listener: SongChangedListener) {
+        mListeners.remove(listener)
+    }
+
+    private fun notifySongChanged() {
+        for (i in mListeners.size - 1 downTo 0) {
+            mListeners[i].onSongChanged()
+        }
+    }
+
+    fun currentSong() : AudioFile {
+        return songQ[currentTrackIndex]
+    }
+
+
 }

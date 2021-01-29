@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">MusicPlayer</string>
-    <string name="notification_title">title</string>
-    <string name="notification_message">messeage</string>
-    <string name="ticker_text">ticker</string>
+    <string name="notification_title">MusicPlayer</string>
+    <string name="notification_message">Music Player is runnning</string>
+    <string name="song_name">"Not playing anything ATM"</string>
+    <string name="artist">Artist:</string>
+    <string name="artistnameplacerholder">ArtistNamePlacerholder</string>
+    <string name="track_name">Track Name:</string>
+    <string name="tracknameplaceholder">TrackNamePlaceholder</string>
 </resources>
