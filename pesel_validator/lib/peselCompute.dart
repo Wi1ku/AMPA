@@ -3,9 +3,6 @@ import 'dart:core';
 import 'package:intl/intl.dart';
 
 
-
-enum Gender {MALE, FEMALE}
-
 List _CONTROLWEIGHTS = [1,3,7,9,1,3,7,9,1,3];
 
 
@@ -28,7 +25,7 @@ String _getYear(String pesel){
 }
 String _getMonth(String pesel){
   String month = pesel[2] + pesel[3];
-  if (month[0] != '0' || month[0] != '1'){
+  if (!(month[0] == '0' || month[0] == '1')){
     month = '1' + pesel[3];
   }
   return month;
@@ -37,8 +34,8 @@ String _getDay(String pesel){
   return pesel.substring(4, 6);
 }
 
-Gender _getGender(String pesel){
-  return int.parse(pesel[9]) % 2 != 0 ? Gender.MALE : Gender.FEMALE;
+String _getGender(String pesel){
+  return int.parse(pesel[9]) % 2 != 0 ? "Male" : "Female";
 }
 
 bool _calculateControlSum(String pesel){
@@ -55,10 +52,12 @@ bool _calculateControlSum(String pesel){
 
 Map getPeselInfo(String pesel){
   var birthDate = new DateFormat("dd-mm-yyyy").parse("${_getDay(pesel)}-${_getMonth(pesel)}-${_getYear(pesel)}");
+  final DateFormat formatter = DateFormat("dd-mm-yyyy");
+  final String formattedBirthDate = formatter.format(birthDate);
   var gender = _getGender(pesel);
   var controlSumIsValid = _calculateControlSum(pesel);
   var returnMap = {
-  'birthDate': birthDate,
+  'birthDate': formattedBirthDate,
   'gender': gender,
   'controlSumisVaild': controlSumIsValid,
   };
