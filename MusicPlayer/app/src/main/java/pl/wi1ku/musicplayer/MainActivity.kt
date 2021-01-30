@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
+
     private fun requestReadPermission(){
         val permissionlistener: PermissionListener = object : PermissionListener {
             override fun onPermissionGranted() {

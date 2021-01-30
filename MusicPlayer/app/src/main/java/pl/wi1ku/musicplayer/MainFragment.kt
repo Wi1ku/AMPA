@@ -1,4 +1,5 @@
 package pl.wi1ku.musicplayer
+
 import android.content.*
 import android.database.Cursor
 import android.net.Uri
@@ -23,15 +24,17 @@ class MainFragment : Fragment(), SongChangedListener {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
         doStartService()
-        super.onCreate(savedInstanceState)
     }
 
-    override fun onDestroy() {
+    override fun onDetach() {
+        unbindService()
         doStopService()
-        super.onDestroy()
+        super.onDetach()
     }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -78,7 +81,7 @@ class MainFragment : Fragment(), SongChangedListener {
                     progress: Int,
                     fromUser: Boolean
                 ) {
-                    if (mService.mediaPlayer != null && fromUser) {
+                    if (mBound && mService.mediaPlayer != null && fromUser) {
                         mService.mediaPlayer!!.seekTo(progress * 1000)
                     }
                 }
@@ -124,6 +127,7 @@ class MainFragment : Fragment(), SongChangedListener {
         _binding = null
     }
 
+
     private val connection = object : ServiceConnection {
 
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
@@ -134,6 +138,7 @@ class MainFragment : Fragment(), SongChangedListener {
         }
 
         override fun onServiceDisconnected(arg0: ComponentName) {
+            mService.unregisterListener(this@MainFragment)
             mBound = false
         }
     }
@@ -145,9 +150,14 @@ class MainFragment : Fragment(), SongChangedListener {
         }
     }
 
-    private fun doStopService() {
-        requireActivity().unbindService(connection)
-        mBound = false
+    private fun unbindService() {
+        if (mBound){
+            requireActivity().unbindService(connection)
+            mBound = false
+        }
+    }
+
+    private fun doStopService(){
         Intent(requireActivity().applicationContext, PlayerService::class.java).also { intent ->
             requireActivity().stopService(intent)
         }
